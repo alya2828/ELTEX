@@ -17,4 +17,13 @@ typedef struct {
     Node* rear; 
 } PriorityQueue;
 
+Node* createNode(int data, int priority);
+PriorityQueue* initializeQueue();
+void enqueue(PriorityQueue* pq, int data, int priority);
+int dequeue(PriorityQueue* pq);
+void clearQueue(PriorityQueue* pq);
+void generateMessages(PriorityQueue* pq, int numMessages);
+void MessagesWithPriority(PriorityQueue* pq, int priority);
+void MessagesWithMinPriority(PriorityQueue* pq, int minPriority);
+
 #endif 

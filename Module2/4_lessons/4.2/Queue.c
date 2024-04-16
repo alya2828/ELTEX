@@ -47,7 +47,7 @@ void enqueue(PriorityQueue* pq, int data, int priority) {
 int dequeue(PriorityQueue* pq) {
     if (pq->front == NULL) {
         printf("Очередь пуста\n");
-        return -1; // Возвращаем -1, чтобы указать об ошибке
+        return -1; 
     }
 
     int data = pq->front->data;
@@ -73,18 +73,18 @@ void clearQueue(PriorityQueue* pq) {
     pq->rear = NULL;
 }
 
-// Генерация случайных сообщений с различными приоритетами
 void generateMessages(PriorityQueue* pq, int numMessages) {
-    srand(time(NULL)); // Инициализация генератора случайных чисел
+    srand(time(NULL)); 
     for (int i = 0; i < numMessages; ++i) {
-        int data = rand() % 100; // Случайные данные сообщения (от 0 до 99)
-        int priority = rand() % 10; // Случайный приоритет сообщения (от 0 до 9)
+        int data = rand() % 100; 
+        int priority = rand() % 10; 
+        
         enqueue(pq, data, priority);
     }
 }
 
 // Выборка данных с определенным приоритетом из очереди
-void extractMessagesWithPriority(PriorityQueue* pq, int priority) {
+void MessagesWithPriority(PriorityQueue* pq, int priority) {
     printf("Извлечение сообщений с приоритетом %d:\n", priority);
     while (pq->front != NULL && pq->front->priority == priority) {
         int data = dequeue(pq);
@@ -93,7 +93,7 @@ void extractMessagesWithPriority(PriorityQueue* pq, int priority) {
 }
 
 // Выборка данных с приоритетом не менее указанного из очереди
-void extractMessagesWithMinPriority(PriorityQueue* pq, int minPriority) {
+void MessagesWithMinPriority(PriorityQueue* pq, int minPriority) {
     printf("Извлечение сообщений с приоритетом не менее %d:\n", minPriority);
     while (pq->front != NULL && pq->front->priority >= minPriority) {
         int data = dequeue(pq);
@@ -107,8 +107,8 @@ int main() {
     
     generateMessages(pq, 20); 
    
-    extractMessagesWithPriority(pq, 0); 
-    extractMessagesWithMinPriority(pq, 3); 
+    MessagesWithPriority(pq, 0); 
+    MessagesWithMinPriority(pq, 3); 
     clearQueue(pq);
     free(pq);
 
