@@ -1,4 +1,4 @@
-#include "Exampl.h"
+#include "contacts.h"
 
 void menu()
 {
@@ -9,6 +9,24 @@ void menu()
     printf("4 - Изменить контакт\n");
     printf("Выберите действие: ");
     return;
+}
+
+void MoveContact(List* head){
+    Person value;
+    List *tmp = head;
+    printf ("Введите имя, которое нужно изменить");
+    fgets(value.Name, MAX_LENGTH, stdin);
+    printf ("Введите фамилю, которое нужно изменить");
+    fgets(value.LastName, MAX_LENGTH, stdin);
+    do
+    {
+        if (CmpContactsEq(&value, &tmp->prev->value) == 0)
+        {
+            tmp->value=EnterData();
+            return;
+        }
+        tmp = tmp->next;
+    } while (tmp != head);
 }
 
 int CmpContactsLessOrEq(Person *vall, Person *valr)
@@ -175,7 +193,7 @@ List *Delete(Person value, List *head)
     do
     {
 
-        if (CmpContactsEq(&value, &tmp->prev->value) != 0)
+        if (CmpContactsEq(&value, &tmp->next->value) != 0)
         {
             // Если удаляется единственный элемент списка
             if (tmp->next == tmp->prev)
@@ -230,23 +248,6 @@ void Print(Person *person)
         i++;
     }
 
-    // Печать номеров телефонов, если они не пустые
-    /*for (int i = 0; i < MAX; i++)
-    {
-        if (strlen(person->ContactInfo.Number[i]) < 4)
-        {
-            break;
-        }
-        if (strlen(person->ContactInfo.Number[i]) >= 1)
-        {
-            printf("Номер телефона: %s\n", person->ContactInfo.Number[i]);
-        }
-        else
-        printf("Номер телефона: - \n");
-        // Для Кирилла тут брейк не прокатит он выведет только один номер даже если ввели 5 номеров
-
-    }*/
-
     printf("\n");
 
     i = 0;
@@ -256,36 +257,14 @@ void Print(Person *person)
         i++;
     }
 
-    // Печать ссылок на страницы, если они не пустые
-    /*for (int i = 0; i < MAX; i++)
-    {
-        if (strlen(person->Profile.Social_networks[i]) >= 2)
-        {
-            printf("Ссылка на страницу: %s\n", person->Profile.Social_networks[i]);
-        }
-        else
-        printf("Ссылка на страницу: - \n");
-
-    }*/
     printf("\n");
 
-    // Печать профилей мессенджеров, если они не пустые
     i = 0;
     while (strlen(person->Profile.Profiles_messengers[i]) > 2)
     {
         printf("Профиль в мессенджере: %s\n", person->Profile.Profiles_messengers[i]);
         i++;
     }
-    /*for (int i = 0; i < MAX; i++)
-    {
-        if (strlen(person->Profile.Profiles_messengers[i]) >= 2)
-        {
-            printf("Профиль в мессенджере: %s\n", person->Profile.Profiles_messengers[i]);
-        }
-        else
-        printf("Профиль в мессенджере: - \n");
-
-    }*/
 }
 
 void PrintList(List *head)
@@ -338,13 +317,16 @@ int main()
             Person contactToDelete = EnterData(); // Введите имя и фамилию контакта для удаления
             head = Delete(contactToDelete, head);
             break;
-
+        case 4:
+            MoveContact(head);
+            break;
         default:
             printf("Ошибка: некорректный выбор. Пожалуйста, выберите действие из меню.\n");
         }
-    } while (choice != 4);
+    } while (choice != 5);
 
-    FreeList(head);
+    //FreeList(head);
 
     return 0;
 }
+
