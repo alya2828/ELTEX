@@ -183,38 +183,45 @@ List *Add(List *head, Person value)
 List *Delete(Person value, List *head)
 {
     List *tmp = head;
-    // Удаление элемента из пустого списка
-    if (NULL == head)
+    
+    if (head == NULL)
     {
-        printf("List empty!\n");
-        return head;
+        printf("Список пуст!\n");
+        return NULL;
     }
-    // Поиск и удаление элемента
+    
     do
     {
-
-        if (CmpContactsEq(&value, &tmp->next->value) != 0)
+        if (CmpContactsEq(&value, &tmp->value))
         {
-            // Если удаляется единственный элемент списка
-            if (tmp->next == tmp->prev)
+           
+            if (tmp->next == tmp->prev && tmp->next == tmp)
             {
                 free(tmp);
                 return NULL;
             }
-            // Перестраиваем связи
-            tmp->next->prev = tmp->prev;
+            
+            // Перестройка связей
             tmp->prev->next = tmp->next;
-            // Если элемент удаляется из начала списка, изменяем head
+            tmp->next->prev = tmp->prev;
+            
             if (tmp == head)
-                head = head->next;
-            // Удаляем найденный элемент
+            {
+                head = tmp->next;
+            }
+            
+           
             free(tmp);
+            
+            
             return head;
         }
+        
         tmp = tmp->next;
     } while (tmp != head);
-    // Если элемент не найден, выводим сообщение
-    printf("Контакт с именем \"%s\" не найден!\n", value.Name);
+    
+    printf("Контакт с именем \"%s\" и фамилией \"%s\" не найден!\n", value.Name, value.LastName);
+    
     return head;
 }
 
